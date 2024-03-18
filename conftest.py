@@ -23,6 +23,7 @@ def bearer_token(create_session):
                 route=Routes.AUTH,
                 app_username="admin",
                 app_password="admin")
+    auth.register()
     yield auth.generate_token()
 
 
