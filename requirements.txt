@@ -1,8 +1,0 @@
-pytest
-requests
-jsonschema
-pydantic
-pytest-pyreport
-sqlalchemy
-psycopg2-binary
-python-dotenv
