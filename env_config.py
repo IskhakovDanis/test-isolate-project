@@ -15,7 +15,7 @@ class Creds:
     DATABASE_CONN_STRING = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 class Routes:
-    BASE_URL = "http://127.0.0.1:8000"
+    BASE_URL = "http://172.17.0.1:8080"
     STORE = f"{BASE_URL}/store"
     PRODUCT = f"{BASE_URL}/product"
     AUTH = f"{BASE_URL}/auth"
