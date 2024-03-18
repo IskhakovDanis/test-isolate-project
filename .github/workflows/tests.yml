@@ -21,7 +21,7 @@ jobs:
         docker-compose up -d
         docker-compose logs -f store-app-testing > logs.txt &
         while true; do
-          if grep -q "est-isolate-project_store-app-testing_1 exited with code 0" logs.txt; then
+          if grep -q "test-isolate-project_store-app-testing_1 exited with code 0" logs.txt; then
             docker cp $(docker-compose ps -q store-app-testing):/app/pyreport.html .
             break
           fi
