@@ -1,0 +1,46 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout store-app-testing
+      uses: actions/checkout@v2
+
+    - name: Add store-app as submodule
+      run: make run
+
+    - name: Build and run Docker Compose
+      run: |
+        docker-compose up -d
+        docker-compose logs -f store-app-testing > logs.txt &
+        while true; do
+          if grep -q "est-isolate-project_store-app-testing_1 exited with code 0" logs.txt; then
+            docker cp $(docker-compose ps -q store-app-testing):/app/pyreport.html .
+            break
+          fi
+          sleep 10
+        done
+
+    - name: Install rsync 📚
+      run: |
+        sudo apt-get install rsync
+        
+    - name: Move Pyreport to Public Directory
+      run: |
+        mkdir public
+        mv pyreport.html public/
+
+    - name: Deploy to Github Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        token: ${{ secrets.PIPELINES_TOKEN }}
+        branch: gh-pages
+        folder: public
+        clean: true
