@@ -18,7 +18,7 @@ jobs:
 
     - name: Build and run Docker Compose
       run: |
-        docker-compose up -d
+        docker-compose up 
         docker-compose logs -f store-app-testing > logs.txt &
         while true; do
           if grep -q "test-isolate-project_store-app-testing_1 exited with code 0" logs.txt; then
